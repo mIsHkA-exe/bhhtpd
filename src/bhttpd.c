@@ -93,15 +93,15 @@ int main(int argc, char** argv) {
     printf("Connection established !\n");  // test connection with client
 
     // close(clientFd); Use to test the connection with client
-    char buffer[1024];  // buffer to store the client dumbass request
-    int requestByte = recv(clientFd, buffer, sizeof(buffer)-1, 0);
+    char request[1024];  // request to store the client dumbass request
+    int requestByte = recv(clientFd, request, sizeof(request)-1, 0);
     if (requestByte == -1) {
       printf("Bad request ! \n");
       continue ;
     }
-    buffer[requestByte] = '\0';
-    printf("Request : %s\n Request-size : %d\n", buffer, requestByte);
-    int valid = strncmp(buffer, "GET ", 4);
+    request[requestByte] = '\0';
+    printf("Request : %s\n Request-size : %d\n", request, requestByte);
+    int valid = strncmp(request, "GET ", 4);
     if (valid == 0) {
       char response[1024] = "HTTP/1.1 200 OK\r\n\r\nHello from my C server!\n";
       int responseByte = send(clientFd, response, strlen(response), 0);
